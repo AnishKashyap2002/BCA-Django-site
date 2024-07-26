@@ -1,0 +1,100 @@
+{% extends 'master.html' %}
+
+{% block style %}
+
+html {
+    scroll-behavior: smooth;
+  }
+body{background-color:#eee}
+.socials i{margin-right: 14px;font-size: 40px;color: #d2c8c8;cursor: pointer}
+.feed-image img{width: 100%;height: auto}
+
+.my_icons{
+    display:flex;
+    justify-content:space-between;
+}
+.comment{
+    font-size:10px;
+}
+.like{
+    margin:0px 10px 10px;
+}
+
+a:hover{
+    text-decoration:none;
+}
+
+.add_note{
+    position:fixed;
+    right : 100px;
+    bottom : 100px;
+    background-color:black;
+    color:white;
+    padding:10px;
+    border-radius:5px;
+    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+    border:1px solid white;
+}
+.add_note:hover{
+    color:white;
+}
+
+{% endblock style %}
+
+{% block content %}
+
+<span >
+    <a href="{% url 'add-note' %}" class = 'add_note'>Add Note</a>
+</span>
+
+<div class="container mt-4 mb-5">
+    <div class="d-flex justify-content-center row ">
+        <div class="col-md-8">
+            {% for note in notes %}
+            <div class="feed p-2" >
+                <div class="bg-white border mt-2 text-black " style = 'border-radius: 10px;'>
+                    <div>
+                        <div class="d-flex flex-row justify-content-between align-items-center p-2 border-bottom">
+
+                            <a href="{% url 'show-profile' note.user.id%}">
+                            <div class="d-flex flex-row align-items-center feed-text px-2"><img class="rounded-circle" src="{{note.user.avatar.url}}" width="45">
+                                <div class="d-flex flex-column flex-wrap ml-2"><span class="font-weight-bold" style = "font-size: 25px;">{{note.user.username}}
+
+                                    {% if note.user.is_teacher %}
+                                    
+                                    <button type="button" class="btn btn-success">Teacher</button>
+                                    {% endif %}
+
+                                </span><span class="text-black-50 time">{{note.date|timesince}} ago</span></div>
+                            </div>
+                        </a>
+
+                        </div>
+                    </div>
+                    <div class="p-2 px-3"><span>{{note.title}}</span></div>
+
+                    <div class="p-2 px-3"><span>{{note.description}}</span></div>
+
+                    {% if note.image %}
+                    <div class="feed-image p-2 px-3" ><img class="img-fluid img-responsive rounded" src="{{note.image.url}}"></div>
+                    {% endif %}
+
+                    {% if note.files %}
+                    <div class="p-2 px-3" style = 'margin:5px;'><span style = 'padding:5px; background-color:white;color:black; border-radius:5px;'>
+                        <a href="{{note.files.url}}" style = "color:black;">Resources</a>
+                    </span></div>
+                    {% endif %}
+                    
+                </div>
+                
+                
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock content %}

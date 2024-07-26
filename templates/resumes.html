@@ -1,0 +1,57 @@
+{% extends 'master.html' %}
+
+{% block style %}
+
+.wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.feed{
+    padding: 5px ;
+    margin: 10px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+{% endblock style %}
+
+{% block content %}
+
+<div class = 'text-center'>
+
+    <h1>Resumes</h1>
+</div>
+
+<div class="wrapper">
+
+    <div>
+        {% for resume in  resumes%}
+        <div class="feed">
+            
+          <div style = 'display:flex; justify-content:space-between; align-items:center; width: 400px;'>
+            <img src="{{resume.image.url}}" alt="" width = '45' height = '45' class = 'rounded-circle'>              
+            <a href ="{% url 'resume' resume.id%}">
+            <div>{{resume.firstname}} &nbsp {{resume.lastname}}
+            </div> 
+            </a>
+            
+          </div>
+        {{resume.date|timesince}} ago
+        
+        
+        </div>
+        {% endfor %}
+    </div>
+
+    <button type="button" class="btn btn-outline-success" onclick = "location.href = '{% url 'add-resume' %}'"
+    style = "
+        position: fixed;
+        bottom: 30px;
+        right: 70px;
+    "
+    >Add Resume</button>
+</div>
+
+
+
+{% endblock content %}

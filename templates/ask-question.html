@@ -1,0 +1,54 @@
+{% extends 'master.html' %}
+
+
+{% block style %}
+
+.form{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+
+{% endblock style %}
+
+.form{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+
+
+
+{% block content %}
+
+
+<h1 class = 'text-center m-4'>Ask Question</h1>
+<div class= 'form'>
+    <form method = 'POST' enctype = 'multipart/form-data' class="form-group">
+        {% csrf_token %}
+        
+        
+          <div class="form-group">
+            <label for="exampleFormControlTextarea1">Ask Your Question</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name= 'body'></textarea>
+          </div>
+        
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Image</label>
+            <input type="file" class="form-control" id="exampleFormControlInput1" placeholder="Enter Image" name = 'image'>
+          </div>
+        <div>
+            <button type="submit" class="btn btn-outline-primary btn-block btn-lg" type = 'submit'>Ask The Question</button>
+        </div>
+        
+        </div>
+        
+      </form>
+</div>
+
+
+
+
+{% endblock content %}

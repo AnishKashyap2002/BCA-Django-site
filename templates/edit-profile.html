@@ -1,0 +1,44 @@
+{% extends 'master.html' %}
+{% block style %}
+
+.container {
+
+    display: flex;
+    justify-content : center;
+    align-items : center;
+}
+.item {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding : 10px;
+}
+{% endblock style %}
+
+{% block content %}
+
+{% for message in messages %}
+
+{{message}} <br>
+
+{% endfor %}
+<h1 class = 'text-center'>
+    Edit Details
+</h1>
+
+<div class= 'container'>
+    <div class = 'item'>
+        <form action="" method = 'POST' enctype= 'multipart/form-data'>
+
+            {% csrf_token %}
+            {% for field in form %}
+        
+            <label for="">{{field.label}}</label><br>
+            {{field}} <br><br>
+
+            
+            {% endfor %}
+            <input type="submit" value = 'Update'>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}

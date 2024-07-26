@@ -1,0 +1,50 @@
+{% extends 'master.html' %}
+
+{% block style %}
+
+.wrapper{
+    display:flex;
+    justify-content: center;
+    align-items : center;
+}
+
+{% endblock style %}
+
+{% block content %}
+
+<h1 class= 'text-center'>
+    Create Room
+</h1>
+
+{% for message in messages %}
+
+{{message}}
+
+{% endfor %}
+
+{% load static %}
+<div class="wrapper">
+    <form action="" method = 'POST' >
+
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1" >Enter Title</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name = 'title' required></textarea>
+          </div>
+          <div class="form-group">
+          <label for="exampleFormControlTextarea1" >Enter Topic</label>
+          <input list="Topics" value="" class="col-sm-6 custom-select custom-select-sm form-control" name = 'topic' required>
+          <datalist id="Topics">
+              {% for topic in topics %}
+             <option value="{{topic.body}}">{{topic.body}}</option>
+             {% endfor %}
+          </datalist>
+          </div>
+          <label for="">Enter </label>
+        
+    <input type="submit" value = 'Add Room'>
+    </form>
+</div>
+
+{% endblock content %}

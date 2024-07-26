@@ -1,0 +1,107 @@
+{% extends 'master.html' %}
+{% block title %}{% endblock title %}
+
+
+{% block style %}
+html {
+    scroll-behavior: smooth;
+  }
+body{background-color:#eee}
+.socials i{margin-right: 14px;font-size: 30px;color: #d2c8c8;cursor: pointer}
+.feed-image img{width: 100%;height: auto}
+
+.my_icons{
+    display:flex;
+    justify-content:space-between;
+}
+.comment{
+    font-size:20px;
+}
+.like{
+    margin:0px 10px 10px;
+}
+
+a{
+    text-decoration:none;
+    color:white;
+}
+a:hover{
+    text-decoration:none;
+    color:white;
+    
+}
+
+.cross a:hover{
+    color:red;
+}
+{% endblock style %}
+
+{% block content %}
+
+
+<div class="container mt-4 mb-5">
+    <div class="d-flex justify-content-center row ">
+        <div class="col-md-8">
+            {% for post in posts %}
+            <div class="feed p-2" >
+                <div class="bg-dark border mt-2 text-white " style = 'border-radius: 10px;'>
+                    <div>
+                        <div class="d-flex flex-row justify-content-between  p-2 border-bottom">
+
+                            <a href="{% url 'show-profile' post.user.id%}">
+                            <div class="d-flex flex-row align-items-center feed-text px-2"><img class="rounded-circle" src="{{post.user.avatar.url}}" width="45">
+                                <div class="d-flex flex-column flex-wrap ml-2"><span class="font-weight-bold" style = "font-size: 30px;">{{post.user.username}} 
+                                    {% if post.user.is_teacher %}
+                                     <button type="button" class="btn btn-danger">Teacher</button>
+                                     {% else %}
+                                     <button type="button" class="btn btn-primary">Student</button>
+                                     {% endif %}
+                                    </span>
+                                     <span class="text-white-30 ">{{post.date|timesince}} ago</span></div>
+                            </div>
+                        </a>
+                        {% if request.user == post.user or request.user.is_teacher %}
+                        
+                        <a href="{% url 'delete-post' post.id %}" class = 'cross'><i class="fa-solid fa-x  right" style = 'margin-right :10px;' ></i></a>
+
+                        {% endif %}
+
+                        </div>
+                    </div>
+                    <div class="p-2 px-3"><span>{{post.caption}}</span></div>
+                    <div class="feed-image p-2 px-3" id = '{{post.id}}'><img class="img-fluid img-responsive rounded" src="{{post.image.url}}"></div>
+                    <div class=" socials p-2 py-3 my_icons">
+                        <span>
+                            <span><i class="fa fa-thumbs-up fa-2x like" style = 'margin:5px;' data-post-id = '{{post.id}}'></i> </span> 
+                            <a href="{% url 'post-comments' post.id %}"><i class="fa fa-comment fa-2x" aria-hidden="False" style = 'margin:5px; margin-left:10px;'></i> </a>
+                        
+                            <span class="comment">
+                               {{post.comments.count}}  Comment{{post.comments.count|pluralize}}
+                            </span>
+                        </span>
+                        
+                    </div>
+                    <div  class='mb-2 ml-2' >
+                       <span id= 'like-count{{post.id}}'>{{post.likes.count}}</span>  Like
+                    </div>
+                </div>
+                
+                
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+{% load static %}
+<script
+  src="https://code.jquery.com/jquery-3.6.4.js"
+  integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+  crossorigin="anonymous">
+</script>
+<script src = "{% static 'js/like.js' %}">
+    
+</script>
+
+{% endblock content %}

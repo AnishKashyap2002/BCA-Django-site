@@ -1,0 +1,40 @@
+{% extends 'master.html' %}
+
+{% block style %} 
+.wrap{ display:flex;
+justify-content: center;
+ align-items:center; 
+} 
+
+{% endblock style %}
+
+{% block content %}
+
+
+<h2 class = 'text-center'>Add Poll</h2>
+<div class="wrap">
+  <div>
+    <form action="" >
+
+      {% csrf_token %}
+      <label for=""> Enter Title</label><br />
+      <textarea name="title" id="title" cols="30" rows="2" class = 'form-control'></textarea><br />
+      <label>Enter The No of Options</label><br />
+      <input type="number" id="count" class = 'form-control' required />
+      <br />
+      <button id="add" class= 'btn btn-secondary'>Add</button>
+      <div class="options form-group"></div>
+
+      <input type="submit" id="submit" class = 'btn btn-success'/>
+    </form>
+  </div>
+</div>
+
+{% load static %}
+<script
+  src="https://code.jquery.com/jquery-3.6.4.js"
+  integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+  crossorigin="anonymous"
+></script>
+<script src="{% static 'js/add-poll.js' %}"></script>
+{% endblock content %}

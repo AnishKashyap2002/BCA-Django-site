@@ -1,0 +1,79 @@
+{% extends 'master.html' %}
+
+
+{% block style %}
+
+.wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.feed{
+    padding: 5px ;
+    margin: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.search{
+    position : fixed;
+    left : 30px;
+    bottom : 30px;
+}
+
+{% endblock style %}
+
+{% block content %}
+
+<div class="search">
+    <form class="form-inline my-2 my-lg-0" method  = 'POST' action = '{% url 'rooms' %}'>
+
+        {% csrf_token %}
+        <input class="form-control mr-sm-2" type="search" placeholder="Search Rooms"  name = 'search_text'>
+        <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+      </form>
+</div>
+
+<div class = 'text-center'>
+
+    <h1>Rooms</h1>
+</div>
+
+<div class="wrapper">
+
+    <div>
+        {% for room in  rooms%}
+        <div class="feed">
+          <div style = 'display:flex; justify-content:space-between; align-items:center; width: 400px;'>
+            
+            <a href ="{% url 'room' room.id%}">
+            <div>{{room.title}}</div> 
+            </a>
+            <div>
+                {% if room.host.is_teacher %}
+                
+                <button type="button" class="btn btn-success">Teacher</button>
+                {% endif %}
+            </div>
+          </div>
+        {{room.date|timesince}} ago
+        <div style = 'margin: 10px;'>
+            <button type="button" class="btn btn-secondary">{{room.topic.body}}</button>
+        </div>
+        
+        </div>
+        {% endfor %}
+    </div>
+
+    <button type="button" class="btn btn-outline-success" onclick = "location.href = '{% url 'add-room' %}'"
+    style = "
+        position: fixed;
+        bottom: 30px;
+        right: 70px;
+    "
+    >Add Room</button>
+</div>
+
+
+
+
+
+{% endblock content %}

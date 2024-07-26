@@ -1,0 +1,240 @@
+{% extends 'master.html' %}
+
+{% block style %}
+
+
+ input[type="file"] {
+    display: none;
+  }
+  /* Style the custom file input button */
+  .custom-file-upload {
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    margin-left:5px;
+  }
+
+
+
+#chat2 .form-control {
+    border-color: transparent;
+    }
+    
+    #chat2 .form-control:focus {
+    border-color: transparent;
+    box-shadow: inset 0px 0px 0px 1px transparent;
+    }
+    
+    .divider:after,
+    .divider:before {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #eee;
+    }
+div.comment { 
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width:500px;
+}
+
+{% endblock style %}
+
+{% block content %}
+
+
+<section class = 'stick'>
+    <div class="container py-5 use" >
+  
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-6">
+  
+          <div class="card" id="chat2">
+            <div class="card-header d-flex justify-content-between align-items-center p-3">
+              <div>
+                <div id ='room_id' data-room-id = '{{room.id}}' name = 'Room'>
+                    <h5 class="mb-0"  style = 'display :inline;'>{{room.title}}  &nbsp </h5>
+                    <button type="button" class="btn btn-secondary">{{room.topic.body}}</button>
+                </div>
+                <strong>{{room.date|timesince}}</strong>
+              </div>
+              <a href="{% url 'show-profile' room.host.id%}">
+              <div class="d-flex flex-row justify-content-start">
+                <img src="{{room.host.avatar.url}}"
+                  alt="avatar 1" style="width: 45px; height: 100%;">
+                <div>
+                </a>
+                  <p class="small p-2 ms-3 mb-1 rounded-3" style="background-color: #f5f6f7;">{{room.host}}</p>
+                  
+                </div>
+            </div>
+              
+            </div>
+            <div class="container mt-4 mb-5  display" >
+                <div class="d-flex justify-content-center row ">
+                    <div class="col-md-8" id = 'messages'>
+                        {% for message in messages %}
+                        <div class="feed p-2" >
+                            <div class="bg-white border mt-2 text-black " style = 'border-radius: 10px;'>
+                                <div>
+                                    <div class="d-flex flex-row justify-content-between align-items-center p-2 border-bottom">
+            
+                                        <a href="{% url 'show-profile' message.user.id%}">
+                                        <div class="d-flex flex-row align-items-center feed-text px-2"><img class="rounded-circle" src="{{message.user.avatar.url}}" width="45">
+                                            <div class="d-flex flex-column flex-wrap ml-2"><span class="font-weight-bold" style = "font-size: 25px;">{{message.user.username}}
+            
+                                                {% if message.user.is_teacher %}
+                                                
+                                                <button type="button" class="btn btn-success">Teacher</button>
+                                                {% endif %}
+            
+                                            </span><span class="text-black-50 time">{{message.date|timesince}} ago</span></div>
+                                        </div>
+                                    </a>
+            
+                                    </div>
+                                </div>
+                                <div class="p-2 px-3"><span>{{message.body}}</span></div>
+            
+            
+                                {% if message.image %}
+                                <div class="feed-image p-2 px-3" ><img class="img-fluid img-responsive rounded" src="{{message.image.url}}"></div>
+                                {% endif %}
+            
+                                
+                            </div>
+                          
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            
+            
+          </div>
+  
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <div class="comment" >
+    <form action="" method = 'POST' enctype = 'multipart/form-data' id = 'comment-form' value = '{{room.id}}'>
+    <div class="card-footer text-muted d-flex justify-content-start align-items-center p-3">
+        
+        {% csrf_token %}
+        <img src="{{request.user.avatar.url}}" class = 'rounded-circle'
+          alt="avatar 3" style="width: 40px; height: 100%;">
+        
+        <textarea  id="body"  rows="2" class="form-control form-control-lg " name = 'body' placeholder = 'Type Something'
+        ></textarea>
+          <span>
+              <label for="file-upload" class="custom-file-upload" class="m-2">
+              <i class="fa fa-paperclip" aria-hidden="False"></i>
+            </label>
+            <input type="file" id="file-upload" name="image" >
+          </span>
+        <button type= 'submit' class="m-2" ><i class="fas fa-paper-plane"></i></button>
+    
+      </div>
+    </form>
+</div>
+ 
+{% comment %}  ------------------------------------------------ {% endcomment %}
+{% comment %} 
+<div class="wrapper">
+    <div>
+        
+    <div>
+        <div class="display">
+            <div class="container mt-4 mb-5">
+                <div class="d-flex justify-content-center row ">
+                    <div class="col-md-8">
+                        {% for message in messages %}
+                        <div class="feed p-2" >
+                            <div class="bg-white border mt-2 text-black " style = 'border-radius: 10px;'>
+                                <div>
+                                    <div class="d-flex flex-row justify-content-between align-items-center p-2 border-bottom">
+            
+                                        <a href="{% url 'show-profile' message.user.id%}">
+                                        <div class="d-flex flex-row align-items-center feed-text px-2"><img class="rounded-circle" src="{{message.user.avatar.url}}" width="45">
+                                            <div class="d-flex flex-column flex-wrap ml-2"><span class="font-weight-bold" style = "font-size: 25px;">{{message.user.username}}
+            
+                                                {% if message.user.is_teacher %}
+                                                
+                                                <button type="button" class="btn btn-success">Teacher</button>
+                                                {% endif %}
+            
+                                            </span><span class="text-black-50 time">{{message.date|timesince}} ago</span></div>
+                                        </div>
+                                    </a>
+            
+                                    </div>
+                                </div>
+                                <div class="p-2 px-3"><span>{{message.body}}</span></div>
+            
+            
+                                {% if message.image %}
+                                <div class="feed-image p-2 px-3" ><img class="img-fluid img-responsive rounded" src="{{message.image.url}}"></div>
+                                {% endif %}
+            
+                                
+                            </div>
+                            
+                            
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    <div>
+        <form action="" method = 'POST' enctype = 'multipart/form-data'>
+
+            <div style = 'display : flex; justify-content: space-between; align-items:center;'>
+                        
+                        <div style = 'width: 85%;'>
+                            <textarea  id="exampleFormControlTextarea1" rows="1" name= 'body' placeholder = 'Enter Comment' class = 'form-control mr-5'  ></textarea>
+                            
+                            
+                        </div>
+                        <div>
+                            <label for="file-upload" class="custom-file-upload">
+                                <i class="fa fa-paperclip" aria-hidden="False"></i>
+                              </label>
+                              <input type="file" id="file-upload" name="image" >
+                              <button type="submit" ><i class="fa fa-paper-plane" aria-hidden="false"></i></button>
+                        </div>
+                            
+                        
+                            
+                             
+                        
+                      </div>
+
+                </form>
+            </div>
+        
+    </div>
+    </div>
+</div> {% endcomment %}
+
+<input type="hidden" id = 'used' value = "{{room.id}}">
+
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script> 
+<script
+  src="https://code.jquery.com/jquery-3.6.4.js"
+  integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+  crossorigin="anonymous">
+</script>
+
+{% load static %}
+<script src = "{% static 'js/room.js' %}">
+
+
+</script>
+
+{% endblock content %}

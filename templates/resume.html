@@ -1,0 +1,161 @@
+{% extends 'master.html' %}
+
+
+ {% block style %}
+ 
+ .wrapper{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+ }
+
+
+.progress {
+    position: relative;
+    overflow: inherit;
+    height: 6px;
+    margin: 30px 0px 15px;
+    width: 100%;
+    display: inline-block;
+    border-radius: 10px;
+}
+
+.progress .progress-bar {
+    height: 6px;
+    background: #009b72;
+    border-radius: 10px;
+}
+
+.progress .progress-bar-title {
+    position: absolute;
+    left: 0;
+    top: -30px;
+    color: #818181;
+    font-size: 16px;
+}
+
+.progress .progress-bar-number {
+    position: absolute;
+    right: 0;
+    color: #888888;
+    top: -30px;
+    font-weight: 600;
+    font-size: 14px;
+}
+.media {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+}
+
+.media-body {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+}
+
+.text-black {
+    color: #000000;
+}
+
+.font-weight-normal {
+    font-weight: 500 !important;
+}
+.w-25 {
+    width: 25% !important;
+}
+.text-muted {
+    color: #b2b2b2 !important;
+}
+.mr-1, .mx-1 {
+    margin-right: 0.625rem !important;
+}
+ 
+ {% endblock style %}
+
+{% block content %}
+
+<div class="container m-3">
+    <div class="row">
+      <div class="col-lg-5 col-md-6">
+        <div class="mb-2">
+          <img class="w-100" src="{{resume.image.url}}" alt="">
+        </div>
+        <div class="mb-2 d-flex">
+          <h4 class="font-weight-normal">{{resume.firstname}} {{resume.lastname}}
+          </h4>
+          
+        </div>
+        <div class="mb-2">
+          <ul class="list-unstyled">
+            <li class="media">
+              <span class="w-40 text-black font-weight-normal">Father's Name: </span>
+              <label class="media-body">{{resume.fathername}}</label>
+            </li>
+            <li class="media">
+              <span class="w-40 text-black font-weight-normal"> Sex : </span>
+              <label class="media-body">{{resume.sex}}</label>
+            </li>
+            <li class="media">
+                <span class="w-40 text-black font-weight-normal"> 10th Percentage : </span>
+                <label class="media-body">{{resume.tenth_percentage}}</label>
+              </li>
+              <li class="media">
+                <span class="w-40text-black font-weight-normal">12th Percentage : </span>
+                <label class="media-body"> {{resume.twelth_percentage}}</label>
+              </li>
+
+            <li class="media">
+              <span class="w-40 text-black font-weight-normal">Phone: </span>
+              <label class="media-body">{{resume.phone}}</label>
+            </li>
+            <li class="media">
+              <span class="w-40 text-black font-weight-normal">Email: </span>
+              <label class="media-body"> {{resume.email}}</label>
+            </li>
+            <li class="media">
+              <span class="w-40 text-black font-weight-normal">Education: </span>
+              <label class="media-body">{{resume.education}}</label>
+            </li>
+            <li class="media">
+                <span class="w-40 text-black font-weight-normal">Languages: </span>
+                <label class="media-body">{{resume.languages}}</label>
+              </li>
+              
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-7 col-md-6 pl-xl-3">
+        <h5 class="font-weight-normal">About</h5>
+        <p>{{resume.about}}</p>
+        <div class="my-2 bg-light p-2">
+          <p class="font-italic mb-0">The price is something not necessarily defined as financial. It could be time, effort, sacrifice, money or perhaps, something else.</p>
+        </div>
+        
+        <h5 class="font-weight-normal">Hobbies</h5>
+        <p>{{resume.hobbies}}</p>
+        <div class="mb-2 mt-2 pt-1">
+          <h5 class="font-weight-normal">Skill</h5>
+        </div>
+        {% for lang in lst %}
+        <div class="py-1">
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width:70%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
+              <div class="progress-bar-title">{{lang}}</div>
+              <span class="progress-bar-number">70%</span>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+{% endblock content %}

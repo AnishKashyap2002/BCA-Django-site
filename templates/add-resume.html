@@ -1,0 +1,65 @@
+{% extends 'master.html' %}
+
+{% block style %}
+
+.wrapper{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.box{
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+input[type='submit']{
+    background-color: #4CAF50; 
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius:5px;
+}
+
+{% endblock style %}
+
+{% block content %}
+
+{% load static %}
+
+
+<div class = 'text-center'>
+    <h1>Add Details</h1>
+</div>
+<div class="wrapper">
+    <div>
+        <div class = 'box'>
+            {% for message  in  messages %}
+
+{{message}} <br>
+
+{% endfor %}
+
+<form action="" method = 'POST' enctype = 'mutlipart/form-data' style = 'width:500px; '>
+{% csrf_token %}
+    {% for field in  form %}
+    
+<div style = 'display:inline-block; margin:20px;'>
+    <label for=""> {{field.label}}</label> <br>
+    {{field}}
+</div>    
+    
+    {% endfor %}
+
+    <input type="submit" value = 'Add'>
+
+</form>
+
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,46 @@
+{% extends 'master.html' %}
+
+{% block content %}
+<!-- Modal HTML -->
+{% load static %}
+<section class="vh-100" style="background-color: #508bfc;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div class="card shadow-2-strong" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+              <h3 class="mb-5">Log in</h3>
+              {% for message in messages %}
+                    {{message}}<br>
+
+              {% endfor %}
+
+              <form action="" method = 'post'>
+                {% csrf_token %}
+              <div class="form-outline mb-4">
+                <input type="text" id="typeEmailX-2" class="form-control form-control-lg"  name = 'username'/>
+              </div>
+  
+              <div class="form-outline mb-4">
+                <input type="password" id="typePasswordX-2" class="form-control form-control-lg" name = 'password' />
+              </div>
+  
+  
+              <button class="btn btn-primary btn-lg btn-block " type="submit">Login</button>
+              <div class="text-center" style= 'margin: 10px;'>
+                <p>Don't have an Account?  Sign Up</p>
+                <p class = 'separate'>
+                    <a href="student-register" >Student</a>
+                    <a href="teacher-register"style = "margin-left:30px;">Teacher</a>
+                </p>
+
+              </div>
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% endblock content %}

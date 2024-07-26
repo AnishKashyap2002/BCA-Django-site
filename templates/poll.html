@@ -1,0 +1,91 @@
+{% extends 'master.html' %}
+
+{% block style %}
+
+.wrapper{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  height: 90vh;
+}
+
+#chart{
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+{% comment %} .charttype{
+  position:fixed;
+  top:100px;
+  right:100px;
+}
+
+  {% endcomment %}
+
+{% endblock style %}
+
+{% block content %}
+
+
+
+<div class="wrapper">
+  <div >
+    
+<div>
+  <h3>
+    <a href=""></a><img src="{{poll.host.avatar.url}}" alt="" class = 'rounded-circle' width = '45' height= '45'>
+    
+    {{poll.title}}
+  {% if voted %}
+<button class = 'btn btn-danger'> Voted</button><br>
+{% endif %}
+</h3>
+<p>{{poll.date|timesince}} ago</p>
+</div>
+
+
+{% for choice in  poll.choices.all %}
+
+
+
+<div class="wrap" style = 'display:inline-block; margin: 5px;'>
+   <form action="/poll-vote">
+       <button type = 'submit' class = 'btn btn-secondary'>{{choice.body}}</button>
+       <input type="hidden" name = 'poll' value = "{{poll.id}}" >
+       <input type="hidden" name = 'choice' value = "{{choice.id}}" >
+   </form>
+   <p> {{choice.votes}} vote{{choice.votes|pluralize}}
+</div>
+
+<input type="hidden" class= 'choices' value = "{{choice.body}}">
+<input type="hidden" class= 'votes' value = "{{choice.votes}}">
+
+
+{% endfor %}
+
+<div class="dropdown charttype" style = 'float:right;'>
+  <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Type Of Chart
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style = 'cursor: pointer;'>
+    <span class="dropdown-item"  id = 'bar'>Bar Chart</span>
+    <span class="dropdown-item"  id = 'doughnut'>Donut Chart</span>
+    <span class="dropdown-item" id ='radar' >Radar Chart</span>
+  </div>
+</div>
+
+<canvas id = 'chart' style = 'width: 100%;max-width:650px; ' ></canvas>
+  </div>
+</div>
+<script
+  src="https://code.jquery.com/jquery-3.6.4.js"
+  integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+  crossorigin="anonymous"
+></script>
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+</script>
+
+{% load   static %}
+<script src="{% static 'js/poll.js' %}"></script>
+{% endblock content %}
